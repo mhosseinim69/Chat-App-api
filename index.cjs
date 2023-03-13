@@ -34,7 +34,7 @@ const server = app.listen(process.env.PORT, () => {
 
 const io = socket(server, {
   cors: {
-    origin: "https://chat-app-9pd5.onrender.com",
+    origin: "*",
     Credentials: true,
   },
 });
@@ -50,8 +50,16 @@ io.on("connection", (socket) => {
   socket.on("send-msg", (data) => {
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
-      socket.to(sendUserSocket).emit("msg-recieve", data.message);
+      socket.to(sendUserSocket).emit("msg-recieve", data);
+      console.log(data) 
     }
+  });
+  socket.on("send-status", (data) => {
+    console.log(data)
+    if (onlineUsers) {
+      socket.emit("status-recieve", data);
+    }
+    
   });
 });
 
