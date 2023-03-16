@@ -50,16 +50,8 @@ io.on("connection", (socket) => {
   socket.on("send-msg", (data) => {
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
-      socket.to(sendUserSocket).emit("msg-recieve", data);
-      console.log(data) 
+      socket.to(sendUserSocket).emit("msg-recieve", data); 
     }
-  });
-  socket.on("send-status", (data) => {
-    console.log(data)
-    if (onlineUsers) {
-      socket.emit("status-recieve", data);
-    }
-    
   });
 });
 
