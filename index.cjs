@@ -53,5 +53,10 @@ io.on("connection", (socket) => {
       socket.to(sendUserSocket).emit("msg-recieve", data); 
     }
   });
+  socket.on("send-status", (data) => {
+    if (onlineUsers) {
+      socket.broadcast.emit("status-recieve", data);
+    }
+  });
 });
 
