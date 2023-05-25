@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default:"",
     },
+    userOnline: {
+        type: Boolean,
+        default: false,
+    },
 
 });
 
