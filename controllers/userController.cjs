@@ -57,6 +57,19 @@ module.exports.setAvatar = async (req,res,next) => {
     }
 };
 
+module.exports.status = async (req,res,next) => {
+    try {  
+        const {id, online} = req.body;
+        const userData = await User.findByIdAndUpdate(id, {
+            userOnline: online,
+        });
+        if (userData.userOnline) return res.json({ msg: "User is online." }); 
+            return res.json({ msg: "User is offline." });
+    }   catch(ex) {
+        next(ex);
+    }
+};
+
 module.exports.getAllUsers = async (req,res,next) => {
     try {
         const users = await User.find({ _id: { $ne: req.params.id }}).select([
@@ -64,6 +77,7 @@ module.exports.getAllUsers = async (req,res,next) => {
             "username",
             "avatarImage",
             "_id",
+            "userOnline",
         ]);
         return res.json(users);
     }   catch(ex) {
